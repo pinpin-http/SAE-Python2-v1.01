@@ -88,7 +88,25 @@ def les_plus_pop (dico_reseau):
 ##############
 
 def create_network(list_of_friends):
-    pass
+    i = 0
+    dico = {}
+    tab_keys = []
+
+    while i < len(list_of_friends):
+        if not list_of_friends[i] in tab_keys:
+            tab_keys.append(list_of_friends[i])
+            if i%2==0:
+                dico[list_of_friends[i]] = [list_of_friends[i+1]]
+            else:
+                dico[list_of_friends[i]] = [list_of_friends[i-1]]
+        else:
+            if i%2==0:
+                dico[list_of_friends[i]].append(list_of_friends[i+1])
+            else:
+                dico[list_of_friends[i]].append(list_of_friends[i-1])
+        i+=1
+    return(dico)
+
 
 def get_people(network):
     pass
