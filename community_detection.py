@@ -106,7 +106,7 @@ def create_network(list_of_friends):
                 dico[list_of_friends[i]].append(list_of_friends[i-1])
         i+=1
     return(dico)
-
+    sssss
 
 def get_people(network):
     pass
