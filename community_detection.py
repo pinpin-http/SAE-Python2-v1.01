@@ -107,7 +107,6 @@ def create_network(list_of_friends):
         i+=1
     return(dico)
 
-testestestest
 
 
 def get_people(network):
