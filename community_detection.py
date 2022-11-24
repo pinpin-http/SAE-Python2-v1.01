@@ -108,12 +108,14 @@ def create_network(list_of_friends):
     return(dico)
 
 
-
 def get_people(network):
-    pass
+    return(list(network.keys()))
+
 
 def are_friends(network, person1, person2):
-    pass
+    i = 0
+    while i < len(network):
+        if network
 
 def all_his_friends(network, person, group):
     pass
