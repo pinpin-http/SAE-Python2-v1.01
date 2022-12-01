@@ -87,6 +87,8 @@ def les_plus_pop (dico_reseau):
 # SAE S01.02 #
 ##############
 
+network = {"Alice" : ["Bob", "Dominique"], "Bob" : ["Alice", "Charlie", "Dominique"], "Charlie" : ["Bob"], "Dominique" : ["Alice", "Bob"]}
+
 def create_network(list_of_friends):
     i = 0
     dico = {}
@@ -113,23 +115,75 @@ def get_people(network):
 
 
 def are_friends(network, person1, person2):
+    liste_cles = list(network.keys())
     i = 0
     while i < len(network):
-        if network
+        if liste_cles[i] == person1:
+            if not person2 in network[liste_cles[i]]:
+                return False
+        elif liste_cles[i] == person2:
+            if not person1 in network[liste_cles[i]]:
+                return False
+        i+=1
+    return True
+
 
 def all_his_friends(network, person, group):
-    pass
+    liste_cles = list(network.keys())
+    i = 0
+    j = 0
+    while i < len(network):
+        if liste_cles[i] == person:
+            while j < len(group):
+                if not group[j] in network[liste_cles[i]]:
+                    return False
+                j+=1
+        i+=1
+    return True
+    
 
 def is_a_community(network, group):
-    pass
+    i = 0
+    temp = []
+    while i < len(group):
+        temp.append(group[i])
+        group.pop(i)
+        if all_his_friends(network, temp[0], group) == False:
+            return False
+        group.insert(i, temp[0])
+        temp = []
+        i+=1
+    return True
 
 
 def find_community(network, group):
-    pass
+    new_group = []
+    new_group.append(group[0])
+    i = 0
+    while i < len(group)-1:
+        if all_his_friends(network, group[i+1], new_group) == True:
+            new_group.append(group[i+1])
+        i+=1
+    return(new_group)
+
 
 def order_by_decreasing_popularity(network, group):
-    pass
+    i = 0
+    liste_cles = list(network.keys())
+    new_tab = []
+    max = liste_cles[0]
 
+    while len(group) != 0:
+        while i < len(group):
+            if len(network[liste_cles[i]]) > len(network[max]):
+                max = liste_cles[i]
+            i+=1
+        new_tab.append(liste_cles[i])
+        group.pop(liste_cles[i])
+        i = 0
+    return(new_tab)
+
+print(order_by_decreasing_popularity(network, ["Alice", "Bob", "Charlie"]))
 
 def find_community_by_decreasing_popularity(network):
     pass

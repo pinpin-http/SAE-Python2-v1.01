@@ -1,16 +1,24 @@
-def create_network(list_of_friends):
+def all_his_friends(network, person, group):
+    liste_cles = list(network.keys())
     i = 0
-    dico = {}
-    tab_keys = []
-
-    while i < len(list_of_friends):
-        if i%2==0:
-            dico[list_of_friends[i]].append(list_of_friends[i+1])
-        else:
-            dico[list_of_friends[i]].append(list_of_friends[i-1])
-        if not list_of_friends[i] in tab_keys:
-            tab_keys.append(list_of_friends[i])
+    j = 0
+    while i < len(network):
+        if liste_cles[i] == person:
+            while j < len(group):
+                if not group[j] in network[liste_cles[i]]:
+                    return False
+                j+=1
         i+=1
-    return(dico)
+    return True
 
-print(create_network(["Alice", "Bob", "Dominique", "Alice"]))
+
+
+
+def find_community(network, group):
+    i = 0
+    community = []
+
+
+network = {"Alice" : ["Bob", "Dominique"], "Bob" : ["Alice", "Charlie", "Dominique"], "Charlie" : ["Bob"], "Dominique" : ["Alice", "Bob"]}
+
+print(find_community(network, ["Alice", "Bob", "Charlie", "Dominique"]))
