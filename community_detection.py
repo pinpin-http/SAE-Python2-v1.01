@@ -168,28 +168,54 @@ def find_community(network, group):
 
 
 def order_by_decreasing_popularity(network, group):
+    sorted_tab = []
+    friends_tab = []
+    max = 0
     i = 0
-    liste_cles = list(network.keys())
-    new_tab = []
-    max = liste_cles[0]
+    i_max = 0
+    j = 0
 
-    while len(group) != 0:
-        while i < len(group):
-            if len(network[liste_cles[i]]) > len(network[max]):
-                max = liste_cles[i]
-            i+=1
-        new_tab.append(liste_cles[i])
-        group.pop(liste_cles[i])
-        i = 0
-    return(new_tab)
+    while i < len(group):
+        friends_tab.append(len(network[group[i]]))
+        i+=1
+    friends_tab.sort(reverse=True)
+    i = 0
+    j = 0
+    while i < len(friends_tab):
+        while j < len(group):
+            if friends_tab[i] == len(network[group[j]]):
+                if group[j] not in sorted_tab:
+                    sorted_tab.append(group[j])
+            j+=1
+        i+=1
+        j = 0
+    return(sorted_tab)
 
-print(order_by_decreasing_popularity(network, ["Alice", "Bob", "Charlie"]))
 
 def find_community_by_decreasing_popularity(network):
-    pass
+    return(find_community(network, order_by_decreasing_popularity(network, list(network.keys()))))
+
 
 def find_community_from_person(network, person):
-    pass
+    i = 0
+    community = []
+    community.append(person)
+    person_friends = network[person]
+    person_friends = order_by_decreasing_popularity(network, person_friends)
+
+    while i < len(person_friends):
+        if all_his_friends(network, person_friends[i], community) == True:
+            community.append(person_friends[i])
+        i+=1
+    return(community)
+
 
 def find_max_community(network):
-    pass
+    network_persons = list(network.keys())
+    max_community = []
+    i = 0
+    while i < len(network_persons):
+        if len(find_community_from_person(network, network_persons[i])) > len(max_community):
+            max_community = find_community_from_person(network, network_persons[i])
+        i+=1
+    return(max_community)
